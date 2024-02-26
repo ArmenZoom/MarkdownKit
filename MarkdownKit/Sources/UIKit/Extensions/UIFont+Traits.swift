@@ -26,6 +26,10 @@ extension UIFont {
   func italic() -> UIFont {
     return withTraits(fontDescriptor.symbolicTraits, .traitItalic) ?? self
   }
+    
+  func boldItalic() -> UIFont {
+      return withTraits(fontDescriptor.symbolicTraits, .traitBold, .traitItalic) ?? self
+  }
 
   func isItalic() -> Bool {
     return fontDescriptor.symbolicTraits.contains(.traitItalic)

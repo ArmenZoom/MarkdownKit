@@ -46,3 +46,43 @@ open class MarkdownBold: MarkdownCommonElement {
     attributedString.deleteCharacters(in: match.range(at: 2))
   }
 }
+
+open class MarkdownBoldItalic: MarkdownCommonElement {
+  
+  fileprivate static let regex = "(.?|^)(\\*\\*\\*|___)(?=\\S)(.+?)(?<=\\S)(\\2)"
+
+  open var font: MarkdownFont?
+  open var color: MarkdownColor?
+
+  open var regex: String {
+    return MarkdownBoldItalic.regex
+  }
+  
+  public init(font: MarkdownFont? = nil, color: MarkdownColor? = nil) {
+    self.font = font
+    self.color = color
+  }
+
+  public func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {
+    attributedString.deleteCharacters(in: match.range(at: 4))
+      
+      var attributes = self.attributes
+
+      attributedString.enumerateAttribute(.font, in: match.range(at: 3)) { value, range, _ in
+        guard let currentFont = value as? MarkdownFont else { return }
+        if let customFont = self.font {
+            attributes[.font] = currentFont.boldItalic()
+        } else {
+          attributedString.addAttribute(
+            NSAttributedString.Key.font,
+            value: currentFont.boldItalic(),
+            range: range
+          )
+        }
+      }
+
+    attributedString.addAttributes(attributes, range: match.range(at: 3))
+
+    attributedString.deleteCharacters(in: match.range(at: 2))
+  }
+}

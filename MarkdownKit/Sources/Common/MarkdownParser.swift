@@ -19,16 +19,18 @@ open class MarkdownParser {
     public static let list          = EnabledElements(rawValue: 1 << 2)
     public static let quote         = EnabledElements(rawValue: 1 << 3)
     public static let link          = EnabledElements(rawValue: 1 << 4)
-    public static let bold          = EnabledElements(rawValue: 1 << 5)
-    public static let italic        = EnabledElements(rawValue: 1 << 6)
-    public static let code          = EnabledElements(rawValue: 1 << 7)
-    public static let strikethrough = EnabledElements(rawValue: 1 << 8)
+    public static let boldItalic    = EnabledElements(rawValue: 1 << 5)
+    public static let bold          = EnabledElements(rawValue: 1 << 6)
+    public static let italic        = EnabledElements(rawValue: 1 << 7)
+    public static let code          = EnabledElements(rawValue: 1 << 8)
+    public static let strikethrough = EnabledElements(rawValue: 1 << 9)
 
     public static let disabledAutomaticLink: EnabledElements = [
       .header,
       .list,
       .quote,
       .link,
+      .boldItalic,
       .bold,
       .italic,
       .code,
@@ -56,6 +58,8 @@ open class MarkdownParser {
   public let automaticLink: MarkdownAutomaticLink
   public let bold: MarkdownBold
   public let italic: MarkdownItalic
+  public let boldItalic: MarkdownBoldItalic
+
   public let code: MarkdownCode
   public let strikethrough: MarkdownStrikethrough
 
@@ -101,6 +105,7 @@ open class MarkdownParser {
     self.automaticLink = MarkdownAutomaticLink()
     self.bold = MarkdownBold()
     self.italic = MarkdownItalic()
+    self.boldItalic = MarkdownBoldItalic()
     self.code = MarkdownCode()
     self.strikethrough = MarkdownStrikethrough()
 
@@ -156,6 +161,7 @@ open class MarkdownParser {
       (.header, header),
       (.list, list),
       (.quote, quote),
+      (.boldItalic, boldItalic),
       (.bold, bold),
       (.italic, italic),
       (.strikethrough, strikethrough),
